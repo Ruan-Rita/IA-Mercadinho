@@ -49,8 +49,8 @@ profundidadeIterativoClass = ProfundidadeIterativoMethod()
 origem = "A"
 destino = ["F","J"]
 
-caminho = amplitudeClass.amplitude(origem, destino)
-print("\nAmplitude...........: ", caminho)
+# caminho = amplitudeClass.amplitude(origem, destino)
+# print("\nAmplitude...........: ", caminho)
 
 
 # caminho = profundidadeLimitada.profundidadeLimitada(origem,destino,2)
@@ -63,8 +63,8 @@ print("\nAmplitude...........: ", caminho)
 # print("\nProf. Limitada (4)..: ",caminho)
 
 
-# caminho = profundidadeIterativoClass.aprofundamentoIterativo(origem,destino)
-# print("\nAprof. Iterativo...:",caminho)
+caminho = profundidadeIterativoClass.aprofundamentoIterativo(origem,destino)
+print("\nAprof. Iterativo...:",caminho)
 
 
 # caminho = bidirecionalClass.bidirecional(origem,destino)
