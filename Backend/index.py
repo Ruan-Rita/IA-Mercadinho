@@ -49,11 +49,15 @@ profundidadeIterativoClass = ProfundidadeIterativoMethod()
 origem = "A"
 destino = ["F","J"]
 
-caminho = amplitudeClass.amplitude(origem, destino)
-print("\nAmplitude...........: ", caminho)
+# caminho = amplitudeClass.amplitude(origem, destino)
+# print("\nAmplitude...........: ", caminho)
 
 
-# caminho = profundidadeLimitada.profundidadeLimitada(origem,destino,2)
+caminho = profundidadeClass.profundidade(origem, destino)
+print("\nProfundidade...........: ", caminho)
+
+
+#caminho = profundidadeLimitada.profundidadeLimitada(origem,destino,2)
 # print("\nProf. Limitada (2)..: ",caminho)
 
 # caminho = profundidadeLimitada.profundidadeLimitada(origem,destino,3)
