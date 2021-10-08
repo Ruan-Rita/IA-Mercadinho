@@ -13,32 +13,6 @@ from ProfundidadeLimitada import ProfundidadeLimitadaMethod
 
 caminho = []
 
-op = 2
-"""
-while op != 1:
-    if op == 2:
-        origem = input("\nDefina a Origem: ")
-        destino = input("Defina o Destino: ")
-        op = 3
-    escolha = int(input("Escolha qual algoritmo você deseja usar:"
-                    "\n1) Amplitude"
-                    "\n2) Profundidade\n\n"))
-    if escolha == 1:
-        caminho = sol.amplitude(origem, destino)
-        print("\nAmplitude...........: ", caminho)
-        escolha == 0
-    if escolha == 2:
-        caminho = sol.profundidade(origem, destino)
-        print("\nProfundidade........: ", caminho)
-        escolha == 0
-
-    op = int(input("\n\nO que você deseja fazer agora?"
-               "\n\n1) Sair"
-               "\n2) Usar outra origem e destino"
-               "\n3) Usar outro algoritmo de busca\n"))
-    print(op)
-print("ENCERRADO")
-"""
 amplitudeClass = AmplitudeMethod()
 bidirecionalClass = BirecionalMethod()
 profundidadeClass = ProfundidadeMethod()
@@ -52,6 +26,9 @@ destino = ["F","J"]
 # caminho = amplitudeClass.amplitude(origem, destino)
 # print("\nAmplitude...........: ", caminho)
 
+caminho = profundidadeClass.profundidade(origem, destino)
+print("\nProf. ...: ",caminho)
+
 
 # caminho = profundidadeLimitada.profundidadeLimitada(origem,destino,2)
 # print("\nProf. Limitada (2)..: ",caminho)
@@ -63,8 +40,8 @@ destino = ["F","J"]
 # print("\nProf. Limitada (4)..: ",caminho)
 
 
-caminho = profundidadeIterativoClass.aprofundamentoIterativo(origem,destino)
-print("\nAprof. Iterativo...:",caminho)
+# caminho = profundidadeIterativoClass.aprofundamentoIterativo(origem,destino)
+# print("\nAprof. Iterativo...:",caminho)
 
 
 # caminho = bidirecionalClass.bidirecional(origem,destino)

@@ -85,33 +85,48 @@ export const SideBar = styled.div`
 `
 export const Graph = styled.div`
     flex: 1;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     border-radius: 10px;
     padding: 10px;
     width: 100%;
     background-color: rgba(10,10,10,0.1);
     height: calc(100% -30px);
     display: grid;
-    grid-template-columns: calc(100% / 6) calc(100% / 6) calc(100% / 6) calc(100% / 6) calc(100% / 6) calc(100% / 6) ;
+    grid-template-columns: calc(100% / 8) calc(100% / 8) calc(100% / 8) calc(100% / 8) calc(100% / 8) calc(100% / 8)  calc(100% / 8)  calc(100% / 8) ;
     grid-template-rows: calc(100% / 6) calc(100% / 6) calc(100% / 6) calc(100% / 6) calc(100% / 6) calc(100% / 6);
 
     /* gap: 30px; */
 
 `
-export const Title = styled.div`
-    font-size: 2.5rem;
-    color: #222;
-    text-align: center;
+export const NodeFather = styled.div`
+    position: relative;
+    width: 100%;
 
+`
+interface IConnector{
+    widthProps: string,
+    rotateProps: string
+}
+
+export const Connector = styled.div<IConnector>`
+    background: green;
+    /* float: left; */
+    position: absolute;
+    width: ${props => props.widthProps};
+    height: 10px;
+    top: -3px;
+    left: 61%;
+    transform: ${props => `rotate(${props.rotateProps})`};
 `
 export const Node = styled.div`
     width: 70px;
+    position: relative;
     border-radius: 50%;
     height: 70px;
     margin: 10px;
     background-color: #966493;
     color: white;
-
+    z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;

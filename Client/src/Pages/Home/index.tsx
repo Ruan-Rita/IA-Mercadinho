@@ -1,18 +1,19 @@
 import React from 'react'
-import {Container, SideBar ,Graph,Content, Node, Title} from "./styles"
+import {Container, SideBar ,Graph,Content, Node, Connector, NodeFather} from "./styles"
 
 const Home : React.FC =  () => {
-    const node = [ ["A", "1", "0"], ["B", "4", "0"], ["C", "3", "1"], ["D", "5", "1"], ["E", "0", "2"], ["F", "0", "3"], ["G", "1", "3"], ["H", "2", "3"], ["I", "3", "3"], ["J", "4", "3"], ["K", "0", "4"], ["L", "1", "4"], ["M", "2", "4"], ["N", "3", "4"], ["O", "3", "5"]]
+    const node = [ ["A", "1", "0"], ["B", "4", "0"], ["C", "3", "1"], ["D", "5", "1"], ["E", "0", "2"], ["F", "0", "3"], ["G", "1", "4"], ["H", "2", "4"], ["I", "3", "4"], ["J", "4", "4"], ["K", "0", "5"], ["L", "1", "6"], ["M", "2", "6"], ["N", "3", "6"], ["O", "3", "7"]]
     const nodeFill = [ 
-        ["0","0"], ["0", "1"], ["0", "2"], ["0", "3"], ["0", "4"], ["0", "5"], 
-        ["1","0"], ["1", "1"], ["1", "2"], ["1", "3"], ["1", "4"], ["1", "5"], 
-        ["2","0"], ["2", "1"], ["2", "2"], ["2", "3"], ["2", "4"], ["2", "5"], 
-        ["3","0"], ["3", "1"], ["3", "2"], ["3", "3"], ["3", "4"], ["3", "5"], 
-        ["4","0"], ["4", "1"], ["4", "2"], ["4", "3"], ["4", "4"], ["4", "5"], 
-        ["5","0"], ["5", "1"], ["5", "2"], ["5", "3"], ["5", "4"], ["5", "5"], 
+        ["0","0"], ["0", "1"], ["0", "2"], ["0", "3"], ["0", "4"], ["0", "5"], ["0", "6"], ["0", "7"], 
+        ["1","0"], ["1", "1"], ["1", "2"], ["1", "3"], ["1", "4"], ["1", "5"], ["1", "6"], ["1", "7"], 
+        ["2","0"], ["2", "1"], ["2", "2"], ["2", "3"], ["2", "4"], ["2", "5"], ["2", "6"], ["2", "7"], 
+        ["3","0"], ["3", "1"], ["3", "2"], ["3", "3"], ["3", "4"], ["3", "5"], ["3", "6"], ["3", "7"], 
+        ["4","0"], ["4", "1"], ["4", "2"], ["4", "3"], ["4", "4"], ["4", "5"], ["4", "6"], ["4", "7"], 
+        ["5","0"], ["5", "1"], ["5", "2"], ["5", "3"], ["5", "4"], ["5", "5"], ["5", "6"], ["5", "7"], 
     ]
     const verifyItem = (item: Array<string>) => {
         let letterCustom = "";
+        // let result = {result :false, letter: null, with: null, rotate: null}
         const letter = node.filter(letter => {
             if(letter[1] === item[0] && letter[2] === item[1] ) {
                 letterCustom = letter[0]
@@ -26,7 +27,7 @@ const Home : React.FC =  () => {
         
         }
 
-        else return false
+        else return false 
     }
     return (
         <Content>
@@ -69,13 +70,17 @@ const Home : React.FC =  () => {
                 </div>
             </SideBar>
             <Container>
-                <Title>Grafo / Planta</Title>
                 <Graph>
                     {
                         nodeFill.map((item, index) => 
-                            <Node className={`${!verifyItem(item) && "no-item"}`} key={index}>
-                                {verifyItem(item) ?? ""}
-                            </Node>
+                            <NodeFather>
+                                <Node className={`${!verifyItem(item) && "no-item"}`} key={index}>
+                                    {verifyItem(item) && (verifyItem(item))}
+                                </Node>
+                                {verifyItem(item) && (
+                                    <Connector widthProps="160px" rotateProps="152deg" />
+                                )}
+                            </NodeFather>
                         )
                     }
                 </Graph>
