@@ -117,6 +117,6 @@ export const Node = styled.div`
     align-items: center;
 
     &.no-item{
-        background: rgba(300, 20, 20, 0);
+        background: rgba(300, 20, 20, 0.2);
     }
 `
