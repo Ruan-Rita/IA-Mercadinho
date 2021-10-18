@@ -42,7 +42,7 @@ export const SideBar = styled.form`
     flex-direction: column;
     padding: 20px;
     h1{
-        color: #222;
+        color: #2d5a28;
         margin-bottom: 20px;
         
     }
@@ -157,4 +157,5 @@ export const Node = styled.div<INode>`
     &.no-item{
         background: rgba(300, 20, 20, 0.1);
     }
+    
 `

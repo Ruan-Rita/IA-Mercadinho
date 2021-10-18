@@ -56,7 +56,8 @@ const Home : React.FC =  () => {
         setNode(aux)
     }
     const getWay = () => {
-        resetColors()
+        
+        resetColorsMsg()
         console.log("TESTe")
         console.log(input, output,method,limit);
         
@@ -85,6 +86,9 @@ const Home : React.FC =  () => {
             }else{
                 if(method === "estrela" || method === "greedy" || method === "custo-uniforme"  ){
                     changeColorItem(data[0])
+                    setMsgFeedback(`Custo: ${data[1]}`)
+
+                    
                 }else{
                     changeColorItem(data)
                 }
@@ -96,7 +100,8 @@ const Home : React.FC =  () => {
         
 
     }
-    const resetColors = ()=> {
+    const resetColorsMsg = ()=> {
+        setMsgFeedback("")
         const aux = node.map(item => {
             item[3] = "#966493"
             return item;
