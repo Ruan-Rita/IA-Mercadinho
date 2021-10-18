@@ -1,8 +1,30 @@
-import React from 'react'
-import {Container, SideBar ,Graph,Content, Node, Connector, NodeFather} from "./styles"
+import { log } from 'console'
+import React, { MouseEventHandler, useState } from 'react'
+import {Container, SideBar ,Graph,Content, Node,NodeFather} from "./styles"
 
 const Home : React.FC =  () => {
-    const node = [ ["A", "1", "0"], ["B", "4", "0"], ["C", "3", "1"], ["D", "5", "1"], ["E", "0", "2"], ["F", "0", "3"], ["G", "1", "4"], ["H", "2", "4"], ["I", "3", "4"], ["J", "4", "4"], ["K", "0", "5"], ["L", "1", "6"], ["M", "2", "6"], ["N", "3", "6"], ["O", "3", "7"]]
+    const [method, setMethod ] = useState<string>("amplitude")
+    const [input, setInput ] = useState<string>("A")
+    const [output, setOutput ] = useState<[string]>([""])
+    const [limit, setLimit ] = useState<string>("3")
+
+    const [node, setNode] = useState([
+        ["A", "1", "0", "#966493","0"], 
+        ["B", "4", "0", "#966493","0"], 
+        ["C", "3", "1", "#966493","0"], 
+        ["D", "5", "1", "#966493","0"], 
+        ["E", "0", "2", "#966493","0"], 
+        ["F", "0", "3", "#966493","0"], 
+        ["G", "1", "4", "#966493","0"], 
+        ["H", "2", "4", "#966493","0"], 
+        ["I", "3", "4", "#966493","0"], 
+        ["J", "4", "4", "#966493","0"], 
+        ["K", "0", "5", "#966493","0"], 
+        ["L", "1", "6", "#966493","0"], 
+        ["M", "2", "6", "#966493","0"], 
+        ["N", "3", "6", "#966493","0"], 
+        ["O", "3", "7", "#966493","0"]
+    ])
     const nodeFill = [ 
         ["0","0"], ["0", "1"], ["0", "2"], ["0", "3"], ["0", "4"], ["0", "5"], ["0", "6"], ["0", "7"], 
         ["1","0"], ["1", "1"], ["1", "2"], ["1", "3"], ["1", "4"], ["1", "5"], ["1", "6"], ["1", "7"], 
@@ -12,77 +34,127 @@ const Home : React.FC =  () => {
         ["5","0"], ["5", "1"], ["5", "2"], ["5", "3"], ["5", "4"], ["5", "5"], ["5", "6"], ["5", "7"], 
     ]
     const verifyItem = (item: Array<string>) => {
-        let letterCustom = "";
-        // let result = {result :false, letter: null, with: null, rotate: null}
-        const letter = node.filter(letter => {
-            if(letter[1] === item[0] && letter[2] === item[1] ) {
-                letterCustom = letter[0]
-                return letter[0]
-            }
+        const letter = node.find(letter => letter[1] === item[0] && letter[2] === item[1])
+        if(letter?.length) return letter
+        else return [] 
+    }
+    const changeColorItem = (caminho: [string]) => {
+        const aux = node.map(item => {
+            caminho.forEach((element, index) => {
+                let color = "#e2d62c"
+                if(caminho[caminho.length -1] == element) color= "#e2502c"
+                else if(caminho[0] == element) color = "#2ce22c"
+                
+                if(item[0] === element) {
+                    item[3] = color
+                }
+            });
+            return item;
+        })
+        setNode(aux)
+    }
+    const getWay = () => {
+        resetColors()
+        console.log("TESTe")
+        console.log(input, output,method,limit);
+        
+        const params = new FormData();
+        params.append("input", input)
+        params.append("output", JSON.stringify(output))
+        params.append("method", method)
+        params.append("limit", limit)
+        
+       
+        const url = 'http://localhost:5000/way-search';
+        const options = {
+            url:"http://localhost:5000/way-search",
+            method: 'POST',
+            body: params
+        };
+        fetch(url, options).then(response => response.json())
+        .then(data => {
+            changeColorItem(data)
+            console.log("data")
+            console.log(data)
         })
         
-        
-        if(letterCustom != "") {
-            return letterCustom
-        
-        }
 
-        else return false 
     }
+    const resetColors = ()=> {
+        const aux = node.map(item => {
+            item[3] = "#966493"
+            return item;
+        })
+        setNode(aux)
+    }
+    const verifyOutputhtml = (element: string) => {
+        let validate = null;
+        var auxOutput = output
+        auxOutput.forEach((item, index) => {
+            if(item == element){
+                validate = true;
+                auxOutput.splice(index, 1)
+            }else if(item == ""){
+                auxOutput.splice(index, 1)
+            }
+        })
+        if(!validate) auxOutput.push(element)
+        setOutput(auxOutput)
+    }
+    
     return (
         <Content>
-            <SideBar>
+            <SideBar onSubmit={event => {
+                event.preventDefault()
+                getWay();
+            }}>
                 <h1>SuperMercado</h1>
                 <div>
-                    <label>Selecionar Metodo:</label>
-                    <select>
-                        <option selected>Amplitude</option>
-                        <option>Amplitude</option>
-                        <option>Amplitude</option>
-                        <option>Amplitude</option>
+                    <label>Selecionar Metodo: </label>
+                    <select name="method" required onChange={event => setMethod(String(event.target.value))}>
+                        <option value="amplitude" selected >Amplitude</option>
+                        <option value="arofundidade" >Profundidade</option>
+                        <option value="arofundidade-limitada" >Profundidade Limitada</option>
+                        <option value="aidirecional" >Bidirecional</option>
+                        <option value="astrela" >Estrela</option>
                     </select>
                 </div>
                 <div>
                     <label>Selecionar Entrada:</label>
-                    <select>
-                        <option selected>Amplitude</option>
-                        <option>Amplitude</option>
-                        <option>Amplitude</option>
-                        <option>Amplitude</option>
+                    <select name="input" required onChange={event => setInput(String(event.target.value))}>
+                        {node.map((item, index) => (
+                            <option key={index} {...item[0] === input ? "selected" : ""}>{item[0]}</option>
+                        ))}
                     </select>
                 </div>
                 <div>
                     <label>Selecionar Saida:</label>
                     <div>
-                        <label><input type="checkbox" value="20" />A</label>
-                        <label><input type="checkbox" value="20" />B</label>
-                        <label><input type="checkbox" value="20" />C</label>
-                        <label><input type="checkbox" value="20" />D</label>
-                        <label><input type="checkbox" value="20" />E</label>
+                        {node.map((item, index) => (
+                            <label key={index}><input key={index} onChange={event => verifyOutputhtml(event.target.value)} name="output" type="checkbox" value={item[0]} />{item[0]}</label>
+                        ))}
                     </div>
                 </div>
                 <div>
                     <label>Digite o limite:</label>
-                    <input type="text" placeholder="Informe um numero" />
+                    <input name="limit" onChange={event => setLimit(String(event.target.value))} type="text" placeholder="Informe um numero" value={limit} />
                 </div>
                 <div>
+                    {/* <button onClick={event => handleClickForm(event)}>Procurar Caminho</button> */}
                     <button>Procurar Caminho</button>
                 </div>
             </SideBar>
             <Container>
                 <Graph>
-                    {
-                        nodeFill.map((item, index) => 
-                            <NodeFather>
-                                <Node className={`${!verifyItem(item) && "no-item"}`} key={index}>
-                                    {verifyItem(item) && (verifyItem(item))}
-                                </Node>
-                                {verifyItem(item) && (
-                                    <Connector widthProps="160px" rotateProps="152deg" />
-                                )}
-                            </NodeFather>
-                        )
-                    }
+                    
+                    {nodeFill.map((item, index) => 
+                        <NodeFather key={index}>
+                            <Node key={index} background={verifyItem(item)[0] ? verifyItem(item)[3]:"#966493"} className={`${!verifyItem(item)[0] && "no-item"}`} >
+                                {verifyItem(item) && (verifyItem(item)[0])}
+                            </Node>
+                        </NodeFather>
+                    )}
+
                 </Graph>
             </Container>
         </Content>

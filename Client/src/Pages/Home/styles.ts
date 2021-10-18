@@ -13,7 +13,7 @@ export const Container = styled.div`
     padding: 35px;
 
 `
-export const SideBar = styled.div`
+export const SideBar = styled.form`
     background-color:#b8d59670 ;
     height: 100%;
     display: flex;
@@ -118,13 +118,16 @@ export const Connector = styled.div<IConnector>`
     left: 61%;
     transform: ${props => `rotate(${props.rotateProps})`};
 `
-export const Node = styled.div`
+interface INode{
+    background: string;
+}
+export const Node = styled.div<INode>`
     width: 70px;
     position: relative;
     border-radius: 50%;
     height: 70px;
     margin: 10px;
-    background-color: #966493;
+    background-color: ${props => props.background};
     color: white;
     z-index: 9999;
     display: flex;
@@ -132,6 +135,6 @@ export const Node = styled.div`
     align-items: center;
 
     &.no-item{
-        background: rgba(300, 20, 20, 0.2);
+        background: rgba(300, 20, 20, 0.1);
     }
 `
