@@ -1,12 +1,14 @@
 import { log } from 'console'
 import React, { MouseEventHandler, useState } from 'react'
-import {Container, SideBar ,Graph,Content, Node,NodeFather} from "./styles"
+import {Container, SideBar ,Graph,Content, Node,NodeFather, MSG} from "./styles"
 
 const Home : React.FC =  () => {
     const [method, setMethod ] = useState<string>("amplitude")
     const [input, setInput ] = useState<string>("A")
     const [output, setOutput ] = useState<[string]>([""])
     const [limit, setLimit ] = useState<string>("3")
+
+    const [msgFeedback, setMsgFeedback] = useState("")
 
     const [node, setNode] = useState([
         ["A", "1", "0", "#966493","0"], 
@@ -73,9 +75,23 @@ const Home : React.FC =  () => {
         };
         fetch(url, options).then(response => response.json())
         .then(data => {
-            changeColorItem(data)
             console.log("data")
             console.log(data)
+            if (typeof data === 'string' || data instanceof String){
+                setMsgFeedback(String(data))
+                setTimeout(() => {
+                    setMsgFeedback("")
+                }, 3000)
+            }else{
+                if(method === "estrela" || method === "greedy" || method === "custo-uniforme"  ){
+                    changeColorItem(data[0])
+                }else{
+                    changeColorItem(data)
+                }
+                
+            }
+            
+            
         })
         
 
@@ -113,10 +129,13 @@ const Home : React.FC =  () => {
                     <label>Selecionar Metodo: </label>
                     <select name="method" required onChange={event => setMethod(String(event.target.value))}>
                         <option value="amplitude" selected >Amplitude</option>
-                        <option value="arofundidade" >Profundidade</option>
-                        <option value="arofundidade-limitada" >Profundidade Limitada</option>
-                        <option value="aidirecional" >Bidirecional</option>
-                        <option value="astrela" >Estrela</option>
+                        <option value="profundidade" >Profundidade</option>
+                        <option value="profundidade-limitada" >Profundidade Limitada</option>
+                        <option value="aprofundamento" >Aprofundamento</option>
+                        <option value="bidirecional" >Bidirecional</option>
+                        <option value="estrela" >Estrela</option>
+                        <option value="greedy" >Greedy</option>
+                        <option value="custo-uniforme" >Custo Uniforme</option>
                     </select>
                 </div>
                 <div>
@@ -145,6 +164,11 @@ const Home : React.FC =  () => {
                 </div>
             </SideBar>
             <Container>
+                {msgFeedback != "" && (
+                    <MSG background={`#ff2929f5`} >
+                        {msgFeedback}
+                    </MSG>
+                ) }
                 <Graph>
                     
                     {nodeFill.map((item, index) => 

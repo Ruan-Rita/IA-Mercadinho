@@ -11,7 +11,27 @@ export const Container = styled.div`
     align-items: center;
     flex-direction: column;
     padding: 35px;
+    position: relative;
 
+
+`
+interface IMSG{
+    background: string
+}
+export const MSG = styled.div<IMSG>`
+    width: 930px;
+    padding: 15px 0px;
+    max-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    color: white;
+    font-weight: 600;
+    z-index: 999;
+    border-radius:20px;
+    transform: translate(0%, -20%);
+    background-color: ${props => props.background};
 `
 export const SideBar = styled.form`
     background-color:#b8d59670 ;
@@ -129,7 +149,7 @@ export const Node = styled.div<INode>`
     margin: 10px;
     background-color: ${props => props.background};
     color: white;
-    z-index: 9999;
+    z-index: 100;
     display: flex;
     justify-content: center;
     align-items: center;
