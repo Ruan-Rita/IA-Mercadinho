@@ -6,5 +6,8 @@ Precisará configurar o terminal
 - venv\Scripts\activate isso no windows
 - . venv/bin/activate isso no Mac/Linux
 
+2. install dependencies
+-  pip install -r requirements.txt
+
 2. depois, dentro deste terminal rodar esse comando para iniciar o servidor
 - py run.py

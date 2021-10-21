@@ -6,13 +6,13 @@ export const Content = styled.div`
     display: grid;
     grid-template-columns: 350px 1fr;
 `
+
 export const Container = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 35px;
     position: relative;
-
 
 `
 interface IMSG{
@@ -30,7 +30,7 @@ export const MSG = styled.div<IMSG>`
     font-weight: 600;
     z-index: 999;
     border-radius:20px;
-    transform: translate(0%, -20%);
+    transform: translate(0%, -70%);
     background-color: ${props => props.background};
 `
 export const SideBar = styled.form`
@@ -103,7 +103,15 @@ export const SideBar = styled.form`
     
 
 `
-export const Graph = styled.div`
+interface IGraph{
+    image: string;
+}
+export const Graph = styled.div<IGraph>`
+    width: 877px !important;
+    max-height: 524px !important;
+    background-image: url(${props => props.image});
+    background-repeat: no-repeat;
+    background-size: contain;
     flex: 1;
     /* margin-top: 20px; */
     border-radius: 10px;
@@ -140,12 +148,14 @@ export const Connector = styled.div<IConnector>`
 `
 interface INode{
     background: string;
+    content: string;
+    displayAfter: string;
 }
 export const Node = styled.div<INode>`
-    width: 70px;
+    width: 60px;
     position: relative;
     border-radius: 50%;
-    height: 70px;
+    height: 60px;
     margin: 10px;
     background-color: ${props => props.background};
     color: white;
@@ -155,7 +165,30 @@ export const Node = styled.div<INode>`
     align-items: center;
 
     &.no-item{
-        background: rgba(300, 20, 20, 0.1);
+        background: rgba(300, 20, 20, 0);
+        &:after{
+            display:none !important;
+        }
+    }
+    
+    &:after{
+        /* ${props =>  props.content !== '' && 'content:' + props.content+";"  }; */
+        display: ${props =>  props.displayAfter} !important;
+        content: "${props =>  props.content}";
+        width: 25px;
+        height: 25px;
+        color: #1f1846e3 ;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgb(103 206 229);
+        border:1px solid white;
+        border-radius: 25px;
+        padding: 5px;
+        top: 0px;
+        right: 0px;
+        transform: translate(0%, -50%);
+        position:absolute;
     }
     
 `

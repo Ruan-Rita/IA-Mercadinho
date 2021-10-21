@@ -11,21 +11,21 @@ const Home : React.FC =  () => {
     const [msgFeedback, setMsgFeedback] = useState("")
 
     const [node, setNode] = useState([
-        ["A", "1", "0", "#966493","0"], 
-        ["B", "4", "0", "#966493","0"], 
-        ["C", "3", "1", "#966493","0"], 
-        ["D", "5", "1", "#966493","0"], 
-        ["E", "0", "2", "#966493","0"], 
-        ["F", "0", "3", "#966493","0"], 
-        ["G", "1", "4", "#966493","0"], 
-        ["H", "2", "4", "#966493","0"], 
-        ["I", "3", "4", "#966493","0"], 
-        ["J", "4", "4", "#966493","0"], 
-        ["K", "0", "5", "#966493","0"], 
-        ["L", "1", "6", "#966493","0"], 
-        ["M", "2", "6", "#966493","0"], 
-        ["N", "3", "6", "#966493","0"], 
-        ["O", "3", "7", "#966493","0"]
+        ["A", "1", "0", "#966493", ""], 
+        ["B", "4", "0", "#966493", ""], 
+        ["C", "3", "1", "#966493", ""], 
+        ["D", "5", "1", "#966493", ""], 
+        ["E", "0", "2", "#966493", ""], 
+        ["F", "0", "3", "#966493", ""], 
+        ["G", "1", "4", "#966493", ""], 
+        ["H", "2", "4", "#966493", ""], 
+        ["I", "3", "4", "#966493", ""], 
+        ["J", "4", "4", "#966493", ""], 
+        ["K", "0", "5", "#966493", ""], 
+        ["L", "1", "6", "#966493", ""], 
+        ["M", "2", "6", "#966493", ""], 
+        ["N", "3", "6", "#966493", ""], 
+        ["O", "3", "7", "#966493", ""]
     ])
     const nodeFill = [ 
         ["0","0"], ["0", "1"], ["0", "2"], ["0", "3"], ["0", "4"], ["0", "5"], ["0", "6"], ["0", "7"], 
@@ -47,13 +47,18 @@ const Home : React.FC =  () => {
                 if(caminho[caminho.length -1] == element) color= "#e2502c"
                 else if(caminho[0] == element) color = "#2ce22c"
                 
-                if(item[0] === element) {
+                if(item[0] === element) { 
                     item[3] = color
+                    item[4] = `${index + 1}`
                 }
             });
             return item;
         })
         setNode(aux)
+        console.log("State updated");
+        console.log(node);
+        
+        
     }
     const getWay = () => {
         
@@ -104,8 +109,10 @@ const Home : React.FC =  () => {
         setMsgFeedback("")
         const aux = node.map(item => {
             item[3] = "#966493"
+            item[4] = ""
             return item;
         })
+
         setNode(aux)
     }
     const verifyOutputhtml = (element: string) => {
@@ -168,17 +175,17 @@ const Home : React.FC =  () => {
                     <button>Procurar Caminho</button>
                 </div>
             </SideBar>
-            <Container>
-                {msgFeedback != "" && (
+            <Container >
+                {msgFeedback !== "" && (
                     <MSG background={`#ff2929f5`} >
                         {msgFeedback}
                     </MSG>
                 ) }
-                <Graph>
+                <Graph image={`${process.env.PUBLIC_URL}/assets/background.png`}>
                     
                     {nodeFill.map((item, index) => 
                         <NodeFather key={index}>
-                            <Node key={index} background={verifyItem(item)[0] ? verifyItem(item)[3]:"#966493"} className={`${!verifyItem(item)[0] && "no-item"}`} >
+                            <Node displayAfter={verifyItem(item) && verifyItem(item)[4] !== "" ? "flex" : "none"} content={verifyItem(item) ? verifyItem(item)[4]:""} key={index} background={verifyItem(item)[0] ? verifyItem(item)[3]:"#966493"} className={`${!verifyItem(item)[0] && "no-item"}`} >
                                 {verifyItem(item) && (verifyItem(item)[0])}
                             </Node>
                         </NodeFather>
