@@ -3,8 +3,8 @@
 
 ## Como Rodar
 Com python instalado
-1. cd Backend
-2. py index.py
+1. cd api
+2. cd client
 
 ## Build do Projeto
 1. Flash para construir API
